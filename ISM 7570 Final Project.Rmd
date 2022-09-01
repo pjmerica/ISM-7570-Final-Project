@@ -1,0 +1,322 @@
+---
+title: "ISM 7550 Final Project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Libraries 
+
+```{r}
+summary(cars)
+```
+
+# Reading in data
+
+You can also embed plots, for example:
+
+```{r}
+# All data is from the basketball data in the other file.
+```
+
+
+# Question 1: Create Matrix (called scores) from picture above
+
+```{r}
+# Creating vector with all the values in the table included. 
+vector = c(22,55,25,16,100,25,66,82,29,18,22,85)
+# Printing out matrix and saving it in a variable
+matrix(data = vector, 3,4, byrow=T)
+scores= matrix(data = vector, 3,4, byrow=T)
+
+```
+
+# Question 2: Create matrix using rbind
+
+```{r}
+# Intitalizing vectors
+r1 = c(22,55,25,16)
+r2 = c(100,25,66,82)
+r3 = c(29,18,22,85)
+# Printing matrix and then saving it as Q2Scores
+rbind(r1,r2,r3)
+scores = rbind(r1,r2,r3)
+```
+
+# Question 3: cbind the data
+
+```{r}
+# intializing column vectors
+c1 = c(22,100,29)
+c2 = c(55,25,18)
+c3 = c(25,66,22)
+c4 = c(16,82,85)
+# Saving it as Q3Scores & then Printing out matric
+scores= cbind(c1,c2,c3,c4)
+cbind(c1,c2,c3,c4)
+```
+#Question 4: print out 66 from scores matrix
+
+```{r}
+#Using Q1 data 
+scores[2,3]
+```
+
+# Question 5:Print out numbers number 16, 82, 85 from the scores matrix.  Hint:  scores [ , 2] prints the numbers 55, 25, 18. 
+```{r}
+scores[,4]
+```
+
+# Question 6: Print out numbers number 100, 25, 66, 82 from the scores matrix. 
+
+```{r}
+scores[2,]
+```
+
+# Question 7: Create a vector called names with values “Bob”, “Julie”, “Tom” and assign these names to each row of the scores matrix.. 
+
+```{r}
+
+names = c("Bob", "Julie", "Tom")
+
+row.names(scores) = names
+
+head(scores)
+
+```
+
+# Question 8: Create a vector called years with values “2010”, “2011”, “2012”, “2013” and assign the years to each column of the scores matrix.
+
+```{r}
+years = c(2010,2011,2012,2013)
+
+colnames(scores) = years
+
+head(scores)
+
+```
+
+# Question 9: Print out number 100 by using named row and column from last 2 questions.  Hint: scores ['Bob', '2010'] prints 22.
+
+```{r}
+
+scores["Julie","2010"]
+
+
+```
+
+# Question 10: Print out the scores for Julie for years 2012 and 2013.
+
+```{r}
+# intializing vector with needed years 
+yearsvec = c("2012","2013")
+scores["Julie",yearsvec ]
+
+```
+
+# Q11: 
+
+```{r}
+V1 <- c(1, 22, 33)
+V2 <- c("Hi", "there", "friend")
+V3 <- c(11, 3, 2016)
+D <- rbind (V1, V2, V3)
+D[3,2]
+
+```
+
+# Q12: Created this function
+
+```{r}
+f <- function (vector=1:3) {
+   vector * 5
+}
+f () + f ( c(1,1,1) )
+```
+
+
+# Q13: Games played for years 2008 and 2009 for all players.
+
+```{r}
+
+sum2008 = sum(Games[,"2008"])
+sum2008
+sum2009 = sum(Games[,"2009"])
+sum2009
+sum2008 + sum2009
+```
+
+
+# Q14: Salary of all the players in NBA for years 2009 to 2014.
+
+```{r}
+# intializing vector for selected years
+vec = c("2009","2010","2011","2012","2013","2014")
+print(Salary[,vec])
+
+```
+
+# Q15: Highest paid player and lowest paid player salary for 2010 season.  Hint:  You can just eye ball the data.  No special code needed to find the highest / lowest number.
+
+```{r}
+max(Salary[,"2010"]) # It's Kobe Bryant
+min(Salary[,"2010"]) # It's Derrick Rose
+```
+
+# Q16: Salary / Games for all players for all years.
+
+```{r}
+Salary/Games
+```
+
+# Q17: Field Goal Accuracy percentage of all of the years played by Kobe Bryant.
+```{r}
+# Getting all made and attempted Field Goals from Kobe Bryant
+FieldGoalAttemptsByKobe = FieldGoalAttempts["KobeBryant",]
+FieldGoalMadeByKobe = FieldGoals["KobeBryant",]
+
+# Getting proportion then multiplying by 100 to get %)
+FieldGoalPerc = FieldGoalMadeByKobe/FieldGoalAttemptsByKobe
+FieldGoalPerc*100
+
+```
+
+# Q18: Plot the Games matrix and explain what do you notice about players like DerrickRose and KobeBryant?  Embed the graph in your answer.
+
+```{r}
+
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (Games, 1:10)
+
+# Neat the lastfew years they started to get hurt. That's tough brother.
+```
+
+# Q19: Plot FieldGoals / Games and what do you notice for DerrickRose as compared to chart in last question? Embed the graph in your answer.
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (FieldGoals/Games, 1:10)
+```
+
+
+# Q20: Who uses the time on the court most effectively?  (HINT: FieldGoals / MinutesPlayed chart).  Embed the graph in your answer.
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (FieldGoals/MinutesPlayed, 1:10)
+
+# Lebron & KD appear to use their time on court the most effectively.
+```
+
+# Q21: Plot out Points / FieldGoals and explain what behavior you notice about certain players in the chart. Embed the graph in your answer.
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (Points/FieldGoals, 1:10)
+```
+
+# Q22: What does the FieldGoals / FieldGoalAttempts chart show us?  Which player surprises you in the chart?  Embed the graph in your answer.
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (FieldGoals/FieldGoalAttempts, 1:10)
+```
+
+# Q23: What is the correlation between FieldGoalAttempts / Games and Points / Games for Dwight Howard?
+
+```{r}
+FGAperGameDH = FieldGoalAttempts["DwightHoward",]/Games["DwightHoward",]
+
+PointsperGameDH = Points["DwightHoward",]/Games["DwightHoward",]
+cor(FGAperGameDH,PointsperGameDH)
+```
+
+# Q24: What is the overall trend of all the players for MinutesPlayed / Games chart?  Embed the graph in your answer.
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (MinutesPlayed/Games, 1:10)
+
+#Everyone started playing less minutes per game
+```
+
+# Q25: Plot Salary / Games what is something that stands out in the chart.  How can we explain this unusual behavior?
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (Salary/Games, 1:10)
+
+# kobe has a year with very little games and very big money
+```
+
+# Q26: Describe anything interesting about the Salary / FieldGoals results
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (Salary/FieldGoals, 1:10)
+
+# Kobe made a lot of money for no field goals
+```
+
+# Q27: Describe anything interesting about the Points / MinutesPlayed results
+
+```{r}
+myplot <- function (data, rows) {
+             matplot (t(data[rows, ]), type="b", pch=15:18, col=c(1:4, 6))
+             legend ("bottomleft", inset=0.01, legend=Players[rows], pch=15:18, col=c(1:4, 6))
+}
+
+#Call the myplot function you created above and plot the first 5
+myplot (Points/MinutesPlayed, 1:10)
+
+
+# Lebron is the goat.Kobe is one of the top players but went down the year got hurt. You can also see Chris Bosh's decline when he lost The Goat (Lebron "The King" James) off his team
+```
+
+
+
+
+
+
